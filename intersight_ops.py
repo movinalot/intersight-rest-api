@@ -1,5 +1,5 @@
 """
-    intersight_ops.py - shows ho to use intersight REST API
+    intersight_ops.py - shows how to use intersight REST API
 
     author: John McDonough (jomcdono@cisco.com)
 """
