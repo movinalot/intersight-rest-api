@@ -7,16 +7,24 @@
 	},
 	"item": [
 		{
-			"_postman_id": "a5e73665-3d39-4f17-9dcb-a8a90084a27b",
 			"name": "GET Compute / PhysicalSummaries",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "dabb2141-10c9-499e-a844-ee125c27b25f",
+						"id": "dc287cff-79ed-41cb-bfd7-3cf7c029d444",
 						"type": "text/javascript",
 						"exec": [
-							""
+							"if (responseBody.length > 0) {",
+							"  var jsonData = JSON.parse(responseBody);",
+							"  for (var i = 0; i < jsonData.Results.length; i++) {",
+							"    var object = jsonData.Results[i];",
+							"    console.log(",
+							"        object.Dn,",
+							"        \"AvailableMemory: \" + object.AvailableMemory,",
+							"        \"NumCpus: \" + object.NumCpus);",
+							"  }",
+							"}"
 						]
 					}
 				}
@@ -60,7 +68,6 @@
 			"response": []
 		},
 		{
-			"_postman_id": "15f8a418-512d-41ad-8370-acbb60fab849",
 			"name": "GET NTP Policies",
 			"request": {
 				"method": "GET",
@@ -101,7 +108,6 @@
 			"response": []
 		},
 		{
-			"_postman_id": "c216ae09-a555-4e2e-9779-d274a99740f7",
 			"name": "POST NTP Policy",
 			"event": [
 				{
@@ -165,7 +171,6 @@
 			"response": []
 		},
 		{
-			"_postman_id": "bc2c1a31-0b45-4126-9839-743cb4624894",
 			"name": "UPDATE NTP Policy",
 			"event": [
 				{
@@ -226,7 +231,6 @@
 			"response": []
 		},
 		{
-			"_postman_id": "0876daf8-f001-489a-9851-242278c3e011",
 			"name": "DELETE NTP Policy",
 			"event": [
 				{
