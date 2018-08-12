@@ -375,7 +375,7 @@
 					"",
 					"",
 					"if (globals['jsrsasign-js'] === undefined ) {",
-					"    console.log(\"jsrasign library not already downloaded. Downloading now. \")",
+					"    console.log(\"jsrasign library not already downloaded. Downloading now. \");",
 					"    ",
 					"    pm.sendRequest({",
 					"        url: \"http://kjur.github.io/jsrsasign/jsrsasign-latest-all-min.js\",",
@@ -402,11 +402,11 @@
 					"tests[\"Response time is less than 200ms\"] = responseTime < 200;",
 					"",
 					"if (responseBody.length > 0) {",
-					"  var jsonData = JSON.parse(responseBody)",
-					"  console.log(jsonData)",
+					"  var jsonData = JSON.parse(responseBody);",
+					"  console.log(jsonData);",
 					"",
 					"  if (jsonData.Results) {",
-					"    console.log(jsonData.Results.length)",
+					"    console.log(jsonData.Results.length);",
 					"  }",
 					"}"
 				]
