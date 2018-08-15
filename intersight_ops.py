@@ -103,10 +103,9 @@ if __name__ == "__main__":
 
         # POST
         if operation['request_method'] == "POST":
-            req_data = json.dumps(operation['request_body'])
             response = requests.post(
                 BURL + operation['resource_path'],
-                data=req_data,
+                data=json.dumps(operation['request_body']),
                 auth=AUTH
                 )
 
@@ -126,10 +125,9 @@ if __name__ == "__main__":
             json_result = json.loads(response.text)
             moid = json_result["Results"][0]["Moid"]
 
-            req_data = json.dumps(operation['request_body'])
             response = requests.patch(
                 BURL + operation['resource_path'] + "/" + moid,
-                data=req_data,
+                data=json.dumps(operation['request_body']),
                 auth=AUTH
                 )
 
