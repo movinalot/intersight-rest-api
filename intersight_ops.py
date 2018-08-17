@@ -22,14 +22,17 @@ if __name__ == "__main__":
     # intersight operations, GET, POST, PATCH, DELETE
     OPERATIONS = [
         {
+            "request_process":True,
             "resource_path":"compute/PhysicalSummaries",
             "request_method":"GET"
         },
         {
+            "request_process":False,
             "resource_path":"ntp/Policies",
             "request_method":"GET"
         },
         {
+            "request_process":False,
             "resource_path":"ntp/Policies",
             "request_method":"POST",
             "request_body":{
@@ -43,6 +46,7 @@ if __name__ == "__main__":
             }
         },
         {
+            "request_process":False,
             "resource_path":"ntp/Policies",
             "request_method":"POST",
             "request_body":{
@@ -57,6 +61,7 @@ if __name__ == "__main__":
             }
         },
         {
+            "request_process":False,
             "resource_path":"ntp/Policies",
             "request_method":"POST",
             "request_body":{
@@ -71,6 +76,7 @@ if __name__ == "__main__":
             }
         },
         {
+            "request_process":False,
             "resource_name":"ntp-policy",
             "resource_path":"ntp/Policies",
             "request_method":"PATCH",
@@ -82,6 +88,7 @@ if __name__ == "__main__":
                 }
         },
         {
+            "request_process":False,
             "resource_name":"ntp-policy-east",
             "resource_path":"ntp/Policies",
             "request_method":"DELETE"
@@ -91,66 +98,68 @@ if __name__ == "__main__":
 
     for operation in OPERATIONS:
 
-        response = None
-        print(operation['request_method'])
+        if operation['request_process']:
 
-        # GET
-        if operation['request_method'] == "GET":
-            response = requests.get(
-                BURL + operation['resource_path'],
-                auth=AUTH
-                )
+            response = None
+            print(operation['request_method'])
 
-        # POST
-        if operation['request_method'] == "POST":
-            response = requests.post(
-                BURL + operation['resource_path'],
-                data=json.dumps(operation['request_body']),
-                auth=AUTH
-                )
+            # GET
+            if operation['request_method'] == "GET":
+                response = requests.get(
+                    BURL + operation['resource_path'],
+                    auth=AUTH
+                    )
 
-        # PATCH
-        if operation['request_method'] == "PATCH":
+            # POST
+            if operation['request_method'] == "POST":
+                response = requests.post(
+                    BURL + operation['resource_path'],
+                    data=json.dumps(operation['request_body']),
+                    auth=AUTH
+                    )
 
-            # GET the Moid of the MO to PATCH
-            response = requests.get(
-                (
-                    BURL + operation['resource_path'] +
-                    "?$filter=Name eq '" + operation['resource_name'] + "'"
-                    ),
-                auth=AUTH
-                )
+            # PATCH
+            if operation['request_method'] == "PATCH":
 
-            # Extract the Moid from the Results
-            json_result = json.loads(response.text)
-            moid = json_result["Results"][0]["Moid"]
+                # GET the Moid of the MO to PATCH
+                response = requests.get(
+                    (
+                        BURL + operation['resource_path'] +
+                        "?$filter=Name eq '" + operation['resource_name'] + "'"
+                        ),
+                    auth=AUTH
+                    )
 
-            response = requests.patch(
-                BURL + operation['resource_path'] + "/" + moid,
-                data=json.dumps(operation['request_body']),
-                auth=AUTH
-                )
+                # Extract the Moid from the Results
+                json_result = json.loads(response.text)
+                moid = json_result["Results"][0]["Moid"]
 
-        # DELETE
-        if operation['request_method'] == "DELETE":
+                response = requests.patch(
+                    BURL + operation['resource_path'] + "/" + moid,
+                    data=json.dumps(operation['request_body']),
+                    auth=AUTH
+                    )
 
-            # GET the Moid of the MO to DELETE
-            response = requests.get(
-                (
-                    BURL + operation['resource_path'] +
-                    "?$filter=Name eq '" + operation['resource_name'] + "'"
-                    ),
-                auth=AUTH
-                )
+            # DELETE
+            if operation['request_method'] == "DELETE":
 
-            # Extract the Moid from the Results
-            json_result = json.loads(response.text)
-            moid = json_result["Results"][0]["Moid"]
+                # GET the Moid of the MO to DELETE
+                response = requests.get(
+                    (
+                        BURL + operation['resource_path'] +
+                        "?$filter=Name eq '" + operation['resource_name'] + "'"
+                        ),
+                    auth=AUTH
+                    )
 
-            response = requests.delete(
-                BURL + operation['resource_path'] + "/" + moid,
-                auth=AUTH
-                )
+                # Extract the Moid from the Results
+                json_result = json.loads(response.text)
+                moid = json_result["Results"][0]["Moid"]
 
-        print(response)
-        print(response.text)
+                response = requests.delete(
+                    BURL + operation['resource_path'] + "/" + moid,
+                    auth=AUTH
+                    )
+
+            print(response)
+            print(response.text)

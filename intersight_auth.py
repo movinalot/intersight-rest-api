@@ -4,7 +4,7 @@
 
     author: Chris Gascoigne (cgascoig@cisco.com)
 """
-
+# pylint: disable=too-few-public-methods
 from base64 import b64encode
 from email.utils import formatdate
 from six.moves.urllib.parse import urlparse
