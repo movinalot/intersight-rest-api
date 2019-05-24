@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "a5703c1f-15fd-4042-84bd-082eb19cc09b",
+		"_postman_id": "0450dd6a-c799-4b1d-afde-f6bec602cae5",
 		"name": "Intersight",
 		"description": "Cisco Intersight Collection",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -95,7 +95,6 @@
 								"value": "{{current-date}}"
 							}
 						],
-						"body": {},
 						"url": {
 							"raw": "https://intersight.com/api/v1/vmedia/Policies/{{server-vmedia-policy}}",
 							"protocol": "https",
@@ -199,7 +198,6 @@
 								"value": "{{current-date}}"
 							}
 						],
-						"body": {},
 						"url": {
 							"raw": "https://intersight.com/api/v1/boot/PrecisionPolicies/{{server-boot-from-local-disk-policy}}",
 							"protocol": "https",
@@ -303,7 +301,6 @@
 								"value": "{{current-date}}"
 							}
 						],
-						"body": {},
 						"url": {
 							"raw": "https://intersight.com/api/v1/ntp/Policies/{{server-ntp-policy}}",
 							"protocol": "https",
@@ -408,7 +405,6 @@
 								"value": "{{current-date}}"
 							}
 						],
-						"body": {},
 						"url": {
 							"raw": "https://intersight.com/api/v1/server/Profiles/{{server-server-profile-01}}",
 							"protocol": "https",
@@ -513,7 +509,6 @@
 								"value": "{{current-date}}"
 							}
 						],
-						"body": {},
 						"url": {
 							"raw": "https://intersight.com/api/v1/server/Profiles/{{server-server-profile-02}}",
 							"protocol": "https",
@@ -783,7 +778,6 @@
 								"value": "{{current-date}}"
 							}
 						],
-						"body": {},
 						"url": {
 							"raw": "https://intersight.com/api/v1/compute/RackUnits?$filter=UserLabel eq 'server-01'",
 							"protocol": "https",
@@ -1050,47 +1044,6 @@
 			]
 		},
 		{
-			"name": "NTP Policy by Moid",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Accept",
-						"value": "application/json"
-					},
-					{
-						"key": "Authorization",
-						"value": "Signature {{httpsig}}"
-					},
-					{
-						"key": "Digest",
-						"value": "{{computed-digest}}"
-					},
-					{
-						"key": "Date",
-						"value": "{{current-date}}"
-					}
-				],
-				"body": {},
-				"url": {
-					"raw": "https://intersight.com/api/v1/ntp/Policies/{{ntp-policy}}",
-					"protocol": "https",
-					"host": [
-						"intersight",
-						"com"
-					],
-					"path": [
-						"api",
-						"v1",
-						"ntp",
-						"Policies",
-						"{{ntp-policy}}"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "Compute / PhysicalSummaries",
 			"event": [
 				{
@@ -1133,7 +1086,6 @@
 						"value": "{{current-date}}"
 					}
 				],
-				"body": {},
 				"url": {
 					"raw": "https://intersight.com/api/v1/compute/PhysicalSummaries",
 					"protocol": "https",
@@ -1146,6 +1098,335 @@
 						"v1",
 						"compute",
 						"PhysicalSummaries"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "NTP Policy",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Signature {{httpsig}}"
+					},
+					{
+						"key": "Digest",
+						"value": "{{computed-digest}}"
+					},
+					{
+						"key": "Date",
+						"value": "{{current-date}}"
+					}
+				],
+				"url": {
+					"raw": "https://intersight.com/api/v1/ntp/Policies",
+					"protocol": "https",
+					"host": [
+						"intersight",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"ntp",
+						"Policies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Device Claim",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "aafba98d-8f40-4a79-a566-a968fb13507e",
+						"exec": [
+							"var respJsonData = JSON.parse(responseBody)",
+							"",
+							"if (respJsonData.Moid) {",
+							"  pm.globals.set(\"ntp-policy\", respJsonData.Moid)",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Signature {{httpsig}}"
+					},
+					{
+						"key": "Digest",
+						"value": "{{computed-digest}}"
+					},
+					{
+						"key": "Date",
+						"value": "{{current-date}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"SecurityToken\": \"3834D982C3C9\",\n  \"SerialNumber\": \"SSI19410412&SSI19420107\"\n}"
+				},
+				"url": {
+					"raw": "https://intersight.com/api/v1/asset/DeviceClaims",
+					"protocol": "https",
+					"host": [
+						"intersight",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"asset",
+						"DeviceClaims"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "API Key Creation",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "aafba98d-8f40-4a79-a566-a968fb13507e",
+						"exec": [
+							"var respJsonData = JSON.parse(responseBody)",
+							"",
+							"if (respJsonData.Moid) {",
+							"  pm.globals.set(\"api-key\", respJsonData.Moid)",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Signature {{httpsig}}"
+					},
+					{
+						"key": "Digest",
+						"value": "{{computed-digest}}"
+					},
+					{
+						"key": "Date",
+						"value": "{{current-date}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"Purpose\": \"API Key Create\"\n}"
+				},
+				"url": {
+					"raw": "https://intersight.com/api/v1/iam/ApiKeys",
+					"protocol": "https",
+					"host": [
+						"intersight",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"iam",
+						"ApiKeys"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "API Key Update",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "aafba98d-8f40-4a79-a566-a968fb13507e",
+						"exec": [
+							"var respJsonData = JSON.parse(responseBody)",
+							"",
+							"if (respJsonData.Moid) {",
+							"  pm.globals.set(\"ntp-policy\", respJsonData.Moid)",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Signature {{httpsig}}"
+					},
+					{
+						"key": "Digest",
+						"value": "{{computed-digest}}"
+					},
+					{
+						"key": "Date",
+						"value": "{{current-date}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"Purpose\": \"API Key Update\"\n}"
+				},
+				"url": {
+					"raw": "https://intersight.com/api/v1/iam/ApiKeys/{{api-key}}",
+					"protocol": "https",
+					"host": [
+						"intersight",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"iam",
+						"ApiKeys",
+						"{{api-key}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "API Key Delete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "aafba98d-8f40-4a79-a566-a968fb13507e",
+						"exec": [
+							"pm.globals.unset(\"api-key\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Signature {{httpsig}}"
+					},
+					{
+						"key": "Digest",
+						"value": "{{computed-digest}}"
+					},
+					{
+						"key": "Date",
+						"value": "{{current-date}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://intersight.com/api/v1/iam/ApiKeys/{{api-key}}",
+					"protocol": "https",
+					"host": [
+						"intersight",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"iam",
+						"ApiKeys",
+						"{{api-key}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "NTP Policy by Moid",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Signature {{httpsig}}"
+					},
+					{
+						"key": "Digest",
+						"value": "{{computed-digest}}"
+					},
+					{
+						"key": "Date",
+						"value": "{{current-date}}"
+					}
+				],
+				"url": {
+					"raw": "https://intersight.com/api/v1/ntp/Policies/{{ntp-policy}}",
+					"protocol": "https",
+					"host": [
+						"intersight",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"ntp",
+						"Policies",
+						"{{ntp-policy}}"
 					]
 				}
 			},
@@ -1217,15 +1498,67 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "aafba98d-8f40-4a79-a566-a968fb13507e",
+						"id": "1e022489-7373-4dec-b238-7b043ac3e008",
 						"type": "text/javascript",
+						"exec": [
+							"pm.globals.unset(\"ntp-policy\");"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Signature {{httpsig}}"
+					},
+					{
+						"key": "Digest",
+						"value": "{{computed-digest}}"
+					},
+					{
+						"key": "Date",
+						"value": "{{current-date}}"
+					}
+				],
+				"url": {
+					"raw": "https://intersight.com/api/v1/ntp/Policies/{{ntp-policy}}",
+					"protocol": "https",
+					"host": [
+						"intersight",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"ntp",
+						"Policies",
+						"{{ntp-policy}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://intersight.com/api/v1/asset/DeviceClaims",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "aafba98d-8f40-4a79-a566-a968fb13507e",
 						"exec": [
 							"var respJsonData = JSON.parse(responseBody)",
 							"",
 							"if (respJsonData.Moid) {",
 							"  pm.globals.set(\"ntp-policy\", respJsonData.Moid)",
 							"}"
-						]
+						],
+						"type": "text/javascript"
 					}
 				}
 			],
@@ -1258,7 +1591,7 @@
 					"raw": "{\n  \"Enabled\":true,\n  \"Name\":\"ntp-policy\",\n  \"Description\":\"NTP Policy for ntp.org\",\n  \"NtpServers\":[\"pool.ntp.org\"],\n  \"Tags\":[]\n}"
 				},
 				"url": {
-					"raw": "https://intersight.com/api/v1/ntp/Policies",
+					"raw": "https://intersight.com/api/v1/asset/DeviceClaims",
 					"protocol": "https",
 					"host": [
 						"intersight",
@@ -1267,101 +1600,8 @@
 					"path": [
 						"api",
 						"v1",
-						"ntp",
-						"Policies"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "NTP Policy",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Accept",
-						"value": "application/json"
-					},
-					{
-						"key": "Authorization",
-						"value": "Signature {{httpsig}}"
-					},
-					{
-						"key": "Digest",
-						"value": "{{computed-digest}}"
-					},
-					{
-						"key": "Date",
-						"value": "{{current-date}}"
-					}
-				],
-				"body": {},
-				"url": {
-					"raw": "https://intersight.com/api/v1/ntp/Policies",
-					"protocol": "https",
-					"host": [
-						"intersight",
-						"com"
-					],
-					"path": [
-						"api",
-						"v1",
-						"ntp",
-						"Policies"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "NTP Policy",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "1e022489-7373-4dec-b238-7b043ac3e008",
-						"type": "text/javascript",
-						"exec": [
-							"pm.globals.unset(\"ntp-policy\");"
-						]
-					}
-				}
-			],
-			"request": {
-				"method": "DELETE",
-				"header": [
-					{
-						"key": "Accept",
-						"value": "application/json"
-					},
-					{
-						"key": "Authorization",
-						"value": "Signature {{httpsig}}"
-					},
-					{
-						"key": "Digest",
-						"value": "{{computed-digest}}"
-					},
-					{
-						"key": "Date",
-						"value": "{{current-date}}"
-					}
-				],
-				"body": {},
-				"url": {
-					"raw": "https://intersight.com/api/v1/ntp/Policies/{{ntp-policy}}",
-					"protocol": "https",
-					"host": [
-						"intersight",
-						"com"
-					],
-					"path": [
-						"api",
-						"v1",
-						"ntp",
-						"Policies",
-						"{{ntp-policy}}"
+						"asset",
+						"DeviceClaims"
 					]
 				}
 			},
@@ -1427,11 +1667,13 @@
 					"    console.log(\"Resolved Request:\");",
 					"    console.log(resolvedRequest);",
 					"    ",
-					"    var body = resolvedRequest.body.raw;",
+					"    var body = \"\";",
 					"    if (",
 					"        request.method.toLowerCase() == \"get\" ||",
 					"        request.method.toLowerCase() == \"delete\" ) {",
 					"        body=\"\";",
+					"    } else {",
+					"        body=resolvedRequest.body.raw;",
 					"    }",
 					"",
 					"    var computedDigest = 'SHA-256=' + CryptoJS.enc.Base64.stringify(CryptoJS.SHA256(body));",
