@@ -1044,7 +1044,7 @@
 			]
 		},
 		{
-			"name": "Compute / PhysicalSummaries",
+			"name": "GET Compute / PhysicalSummaries",
 			"event": [
 				{
 					"listen": "test",
@@ -1104,7 +1104,7 @@
 			"response": []
 		},
 		{
-			"name": "NTP Policy",
+			"name": "GET NTP Policy",
 			"request": {
 				"method": "GET",
 				"header": [
@@ -1143,7 +1143,70 @@
 			"response": []
 		},
 		{
-			"name": "NTP Policy by Moid",
+			"name": "POST NTP Policy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "662374a2-8323-45fc-bd0e-241c4fcd53bc",
+						"exec": [
+							"var respJsonData = JSON.parse(responseBody)",
+							"",
+							"if (respJsonData.Moid) {",
+							"  pm.globals.set(\"ntp-policy\", respJsonData.Moid)",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Signature {{httpsig}}"
+					},
+					{
+						"key": "Digest",
+						"value": "{{computed-digest}}"
+					},
+					{
+						"key": "Date",
+						"value": "{{current-date}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"Enabled\":true,\n\t\"Name\": \"ntp-policy\",\n\t\"Description\": \"NTP Policy for ntp.org\",\n\t\"NtpServers\": [ \"pool.ntp.org\" ],\n\t\"Tags\":[]\n}"
+				},
+				"url": {
+					"raw": "https://intersight.com/api/v1/ntp/Policies",
+					"protocol": "https",
+					"host": [
+						"intersight",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"ntp",
+						"Policies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET NTP Policy by Moid",
 			"request": {
 				"method": "GET",
 				"header": [
@@ -1183,7 +1246,7 @@
 			"response": []
 		},
 		{
-			"name": "NTP Policy",
+			"name": "UPDATE NTP Policy",
 			"event": [
 				{
 					"listen": "test",
@@ -1243,16 +1306,16 @@
 			"response": []
 		},
 		{
-			"name": "NTP Policy",
+			"name": "DELETE NTP Policy",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"id": "1e022489-7373-4dec-b238-7b043ac3e008",
-						"type": "text/javascript",
 						"exec": [
 							"pm.globals.unset(\"ntp-policy\");"
-						]
+						],
+						"type": "text/javascript"
 					}
 				}
 			],
@@ -1289,65 +1352,6 @@
 						"ntp",
 						"Policies",
 						"{{ntp-policy}}"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "NTP Policy",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "662374a2-8323-45fc-bd0e-241c4fcd53bc",
-						"exec": [
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Accept",
-						"value": "application/json"
-					},
-					{
-						"key": "Authorization",
-						"value": "Signature {{httpsig}}"
-					},
-					{
-						"key": "Digest",
-						"value": "{{computed-digest}}"
-					},
-					{
-						"key": "Date",
-						"value": "{{current-date}}"
-					},
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"Enabled\":true,\n\t\"Name\": \"ntp-policy\",\n\t\"Description\": \"NTP Policy for ntp.org\",\n\t\"NtpServers\": [ \"pool.ntp.org\" ],\n\t\"Tags\":[]\n}"
-				},
-				"url": {
-					"raw": "https://intersight.com/api/v1/ntp/Policies",
-					"protocol": "https",
-					"host": [
-						"intersight",
-						"com"
-					],
-					"path": [
-						"api",
-						"v1",
-						"ntp",
-						"Policies"
 					]
 				}
 			},
