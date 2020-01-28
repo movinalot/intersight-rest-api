@@ -10,7 +10,7 @@ from intersight_auth import IntersightAuth
 
 # Create an AUTH object
 AUTH = IntersightAuth(
-    secret_key_filename='C:\\Users\\developer\\Desktop\\key\\SecretKey.txt',
+    secret_key_filename='C:\\Users\\developer\\Desktop\\intersight-rest-api\\key\\SecretKey.txt',
     api_key_id='api-key-id'
     )
 
