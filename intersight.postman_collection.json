@@ -1,8 +1,8 @@
 {
 	"info": {
 		"_postman_id": "0450dd6a-c799-4b1d-afde-f6bec602cae5",
-		"name": "Intersight",
-		"description": "Cisco Intersight Collection",
+		"name": "Cisco Intersight",
+		"description": "## Cisco Intersight Postman Collection\n\nThe Cisco Intersight Postman Collection provides a subset of all Intersight calls. Cisco Intersight is based on the OpenAPI specification and as such a Postman collection can be created directly from the OpenAPI specification.\n\nHowever the OpenAPI specification does not provide the pre-requestion operation of siging the request.  A request signed with the user's API Key ID and their Secret Key is needed to authenticate the request.  Additionally, the pre-request script pre-processes the Body and URL Postman variable prior to signing the request.\n\nThe pre-request script requires two variables, that must be in the current Postman environment and named exactly as follows;\n\n**api-key** - which is available in the Intersight Web interafce after a successful API Key creation.\n**secret-key** - which is the complete text of the SecretKet.txt file that is downloaded after a successful API Key creation.\n\nWith defined API Key environment variables the provided calls will work within the limits of your Intersight account. With respect to licensing and account capabilities.\n\nThe collection also contains some basic test that determine the success or failure of the request and is the request completed in a certain amount of time.\n\nSeveral of the requests contain post-request tests to perform various activities\n\n- Update the Postman console\n- Set Environment variables\n- Unset Environment variables\n\nCisco DevNet provides several Learning Labs and an Inersight Sandbox to get you started using these Postman Calls.\n\n## Cisco DevNet resources\n\n- [Cisco Intersight DevNet Learning Labs ](https://developer.cisco.com/learning/modules/intersight-rest-api)\n\n- [Cisco Intersight DevNet Sandbox](https://devnetsandbox.cisco.com/RM/Diagram/Index/a63216d2-e891-4856-9f27-309ca61ec862?diagramType=Topology)",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -1044,6 +1044,300 @@
 			]
 		},
 		{
+			"name": "Device Claiming",
+			"item": [
+				{
+					"name": "Device Claim",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "aafba98d-8f40-4a79-a566-a968fb13507e",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Signature {{httpsig}}"
+							},
+							{
+								"key": "Digest",
+								"value": "{{computed-digest}}"
+							},
+							{
+								"key": "Date",
+								"value": "{{current-date}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"SecurityToken\": \"{{security-token}}\",\n  \"SerialNumber\": \"{{serial-number}}\"\n}"
+						},
+						"url": {
+							"raw": "https://intersight.com/api/v1/asset/DeviceClaims",
+							"protocol": "https",
+							"host": [
+								"intersight",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"asset",
+								"DeviceClaims"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Use this call to claim a device"
+		},
+		{
+			"name": "Api Key Managment",
+			"item": [
+				{
+					"name": "API Key Creation",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "aafba98d-8f40-4a79-a566-a968fb13507e",
+								"exec": [
+									"var respJsonData = JSON.parse(responseBody)",
+									"",
+									"if (respJsonData.Moid) {",
+									"  pm.globals.set(\"api-key\", respJsonData.Moid)",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Signature {{httpsig}}"
+							},
+							{
+								"key": "Digest",
+								"value": "{{computed-digest}}"
+							},
+							{
+								"key": "Date",
+								"value": "{{current-date}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"Purpose\": \"API Key Create\"\n}"
+						},
+						"url": {
+							"raw": "https://intersight.com/api/v1/iam/ApiKeys",
+							"protocol": "https",
+							"host": [
+								"intersight",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"iam",
+								"ApiKeys"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "API Key Update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "aafba98d-8f40-4a79-a566-a968fb13507e",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Signature {{httpsig}}"
+							},
+							{
+								"key": "Digest",
+								"value": "{{computed-digest}}"
+							},
+							{
+								"key": "Date",
+								"value": "{{current-date}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"Purpose\": \"API Key Update\"\n}"
+						},
+						"url": {
+							"raw": "https://intersight.com/api/v1/iam/ApiKeys/{{api-key}}",
+							"protocol": "https",
+							"host": [
+								"intersight",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"iam",
+								"ApiKeys",
+								"{{api-key}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "API Key Delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "aafba98d-8f40-4a79-a566-a968fb13507e",
+								"exec": [
+									"pm.globals.unset(\"api-key\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Signature {{httpsig}}"
+							},
+							{
+								"key": "Digest",
+								"value": "{{computed-digest}}"
+							},
+							{
+								"key": "Date",
+								"value": "{{current-date}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://intersight.com/api/v1/iam/ApiKeys/{{api-key}}",
+							"protocol": "https",
+							"host": [
+								"intersight",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"iam",
+								"ApiKeys",
+								"{{api-key}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Use these calls to manage Intersight API Keys"
+		},
+		{
+			"name": "Any Query",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ace0e7ae-0f92-4789-b6dd-24d17e67ca56",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Signature {{httpsig}}"
+					},
+					{
+						"key": "Digest",
+						"value": "{{computed-digest}}"
+					},
+					{
+						"key": "Date",
+						"value": "{{current-date}}"
+					}
+				],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "GET Compute / PhysicalSummaries",
 			"event": [
 				{
@@ -1098,6 +1392,148 @@
 						"v1",
 						"compute",
 						"PhysicalSummaries"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Compute / RackUnits",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b79e7a35-b399-48f2-bbc1-95d0088c4721",
+						"exec": [
+							"var rackunits = [];",
+							"",
+							"if (responseBody.length > 0) {",
+							"  var jsonData = JSON.parse(responseBody);",
+							"  for (var i = 0; i < jsonData.Results.length; i++) {",
+							"    var object = jsonData.Results[i];",
+							"    rackunits.push(object.Moid)",
+							"    console.log(",
+							"        object.Dn,",
+							"        \"AvailableMemory: \" + object.AvailableMemory,",
+							"        \"NumCpus: \" + object.NumCpus);",
+							"  }",
+							"}",
+							"pm.globals.set(\"rackunits\", JSON.stringify(rackunits));",
+							"pm.globals.set(\"rackunit_index\", 0)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Signature {{httpsig}}"
+					},
+					{
+						"key": "Digest",
+						"value": "{{computed-digest}}"
+					},
+					{
+						"key": "Date",
+						"value": "{{current-date}}"
+					}
+				],
+				"url": {
+					"raw": "https://intersight.com/api/v1/compute/RackUnits",
+					"protocol": "https",
+					"host": [
+						"intersight",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"compute",
+						"RackUnits"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Single Compute / RackUnit",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a0bb7258-dc37-4906-90ac-12ab000427c0",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "2f7ee53d-c40d-4e7f-8de6-d6dfad9e091c",
+						"exec": [
+							"// Fetch the variables set in \"Get Compute RackUnitsTenants\"",
+							"",
+							"rackunits = JSON.parse(pm.variables.get('rackunits'))",
+							"index = parseInt(pm.variables.get('rackunit_index'))",
+							"pm.globals.set('rackunit_moid', rackunits[index])",
+							"",
+							"// If we are *not* on the last item in the list,",
+							"// increment the index and set the next request ",
+							"// back to this one. Otherwise end the loop.",
+							"",
+							"if (index + 1 < rackunits.length){",
+							"    pm.globals.set('rackunit_index', index + 1)",
+							"    postman.setNextRequest('GET Single Compute / RackUnit')",
+							"}else{",
+							"    postman.setNextRequest(null)",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Signature {{httpsig}}"
+					},
+					{
+						"key": "Digest",
+						"value": "{{computed-digest}}"
+					},
+					{
+						"key": "Date",
+						"value": "{{current-date}}"
+					}
+				],
+				"url": {
+					"raw": "https://intersight.com/api/v1/compute/RackUnits/{{rackunit_moid}}",
+					"protocol": "https",
+					"host": [
+						"intersight",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"compute",
+						"RackUnits",
+						"{{rackunit_moid}}"
 					]
 				}
 			},
@@ -1200,6 +1636,70 @@
 						"v1",
 						"ntp",
 						"Policies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST Intiate Firmware Upgrade",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "662374a2-8323-45fc-bd0e-241c4fcd53bc",
+						"exec": [
+							"var respJsonData = JSON.parse(responseBody)",
+							"",
+							"if (respJsonData.Moid) {",
+							"  pm.globals.set(\"ntp-policy\", respJsonData.Moid)",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Signature {{httpsig}}"
+					},
+					{
+						"key": "Digest",
+						"value": "{{computed-digest}}"
+					},
+					{
+						"key": "Date",
+						"value": "{{current-date}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"DirectDownload\":{},\n\t\"NetworkShare\":{\n\t\t\"MapType\":\"www\",\n\t\t\"Upgradeoption\":\"nw_upgrade_full\",\n\t\t\"HttpServer\":{\n\t\t\t\"LocationLink\":\"10.10.10.10/ucs-c240m4-huu-4.1.1f.iso\"\n\t\t}\n\t},\n\t\"UpgradeType\":\"network_upgrade\",\n\t\"Server\":\"5e21ec636176752d31b17ff8\"\n}"
+				},
+				"url": {
+					"raw": "https://www.intersight.com/api/v1/firmware/Upgrades",
+					"protocol": "https",
+					"host": [
+						"www",
+						"intersight",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"firmware",
+						"Upgrades"
 					]
 				}
 			},
@@ -1356,6 +1856,117 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "User Creation",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Signature {{httpsig}}",
+						"type": "text"
+					},
+					{
+						"key": "Digest",
+						"value": "{{computed-digest}}",
+						"type": "text"
+					},
+					{
+						"key": "Date",
+						"value": "{{current-date}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"Email\":\"person@email.com\",\n\t\"Idpreference\": {\n\t\t\"Selector\": \"$filter=Name eq 'Cisco'\"\n\t},\n\t\"Permissions\": [\n\t\t{\n\t\t\t\"Selector\": \"$filter=Name eq 'Device Administrator'\"\n\t\t},\n\t\t{\n\t\t\t\"Selector\": \"$filter=Name eq 'HyperFlex Cluster Administrator'\"\n\t\t}\n\t]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://www.intersight.com/api/v1/iam/Users",
+					"protocol": "https",
+					"host": [
+						"www",
+						"intersight",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"iam",
+						"Users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User Query",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Signature {{httpsig}}",
+						"type": "text"
+					},
+					{
+						"key": "Digest",
+						"value": "{{computed-digest}}",
+						"type": "text"
+					},
+					{
+						"key": "Date",
+						"value": "{{current-date}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://www.intersight.com/api/v1/iam/Users",
+					"protocol": "https",
+					"host": [
+						"www",
+						"intersight",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"iam",
+						"Users"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"event": [
@@ -1383,7 +1994,7 @@
 					"        if (signingBase !== '') { signingBase += '\\n'; }",
 					"        signingBase += h.toLowerCase() + \": \" + headerHash[h];",
 					"      });",
-					"      console.log(signingBase)",
+					"      console.log(signingBase);",
 					"    ",
 					"      var kjursig = new KJUR.crypto.Signature({\"alg\": \"SHA256withRSA\"});",
 					"      kjursig.init(config.secretkey);",
@@ -1438,25 +2049,34 @@
 					"    console.log(\"Query String:\");",
 					"    var queryString  = \"\";",
 					"    for (var i = 0; i < resolvedRequest.url.query.length; ++i) {",
-					"            console.log(\"Key:\" + resolvedRequest.url.query[i]['key']);",
-					"            console.log(\"Value: \" + resolvedRequest.url.query[i]['value']);",
+					"            console.log(\"Key:\" + resolvedRequest.url.query[i].key);",
+					"            console.log(\"Value: \" + resolvedRequest.url.query[i].value);",
 					"            ",
 					"            if (i>0) {",
 					"                queryString += '&';",
 					"            }",
-					"            // Append each URL encoded parameter to the targetUrl",
-					"            // However unencode Commas (,), Colons (:), Dollar Signs (:)",
-					"            // and Forward Slashes (/)",
+					"            // Append each URL encoded parameter to the targetUrl unencode ",
+					"            // 24 $ Dollar Sign",
+					"            // 28 ( Left Parenthesis ",
+					"            // 29 ) Right Parenthesis",
+					"            // 2B + Plus Sign",
+					"            // 2C , Comma",
+					"            // 2F / Forward Slash",
+					"            // 3A : Colon",
+					"            // 3D = Equals Sign",
+					"            // 40 @ At Sign",
+					"            //",
 					"            queryString += (",
-					"                resolvedRequest.url.query[i]['key'] + \"=\" +",
-					"                encodeURIComponent(resolvedRequest.url.query[i]['value']).",
+					"                resolvedRequest.url.query[i].key + \"=\" +",
+					"                encodeURIComponent(resolvedRequest.url.query[i].value).",
 					"                replace(/['()=]/g, escape).",
-					"                replace(/%(?:2C|3A|2F|24|3D)/g, unescape)",
+					"                replace(/%(?:24|28|29|2B|2C|2F|3A|3D|40)/g, unescape)",
 					"            );",
 					"    }",
 					"    ",
 					"    if (queryString.length > 0) {",
-					"        targetUrl += \"?\" + queryString;",
+					"        queryStringTmp = queryString.replace(\"%25\",\"%\")",
+					"        targetUrl += \"?\" + queryStringTmp;",
 					"        console.log(\"Target Url: \" + targetUrl );",
 					"    }",
 					"    ",
@@ -1483,7 +2103,7 @@
 					"    postman.setEnvironmentVariable(\"target-url\", targetUrl);",
 					"}",
 					"",
-					"if (globals['jsrsasign-js'] === undefined ) {",
+					"if (globals['jsrsasign-js'] === undefined || globals['jsrsasign-js'] == \"\") {",
 					"    console.log(\"jsrasign library not already downloaded. Downloading now. \");",
 					"    ",
 					"    pm.sendRequest({",
@@ -1496,6 +2116,7 @@
 					"    });",
 					"    ",
 					"} else {",
+					"    console.log(\"Do doHttpSig\")",
 					"    doHttpSig();",
 					"}"
 				]
@@ -1521,5 +2142,6 @@
 				]
 			}
 		}
-	]
+	],
+	"protocolProfileBehavior": {}
 }
