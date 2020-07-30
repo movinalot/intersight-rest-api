@@ -10,8 +10,8 @@ from intersight_auth import IntersightAuth
 
 # Create an AUTH object
 AUTH = IntersightAuth(
-    secret_key_filename='/Users/jomcdono/Downloads/SecretKey.txt',
-    api_key_id='59dd1f1916267c00015e0929/59dd1ec316267c00015e0496/5b2bc9317a76627434a609d1'
+    secret_key_filename='/Path/To/SecretKey/SecretKey.txt',
+    api_key_id='key-id'
     )
 
 # Intersight REST API Base URL
