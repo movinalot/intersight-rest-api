@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "0450dd6a-c799-4b1d-afde-f6bec602cae5",
+		"_postman_id": "b35e1ed8-21c2-4abc-9b4e-922c58e78a22",
 		"name": "Cisco Intersight",
 		"description": "## Cisco Intersight Postman Collection\n\nThe Cisco Intersight Postman Collection provides a subset of all Intersight calls. Cisco Intersight is based on the OpenAPI specification and as such a Postman collection can be created directly from the OpenAPI specification.\n\nHowever the OpenAPI specification does not provide the pre-requestion operation of siging the request.  A request signed with the user's API Key ID and their Secret Key is needed to authenticate the request.  Additionally, the pre-request script pre-processes the Body and URL Postman variable prior to signing the request.\n\nThe pre-request script requires two variables, that must be in the current Postman environment and named exactly as follows;\n\n**api-key** - which is available in the Intersight Web interafce after a successful API Key creation.\n**secret-key** - which is the complete text of the SecretKet.txt file that is downloaded after a successful API Key creation.\n\nWith defined API Key environment variables the provided calls will work within the limits of your Intersight account. With respect to licensing and account capabilities.\n\nThe collection also contains some basic test that determine the success or failure of the request and is the request completed in a certain amount of time.\n\nSeveral of the requests contain post-request tests to perform various activities\n\n- Update the Postman console\n- Set Environment variables\n- Unset Environment variables\n\nCisco DevNet provides several Learning Labs and an Inersight Sandbox to get you started using these Postman Calls.\n\n## Cisco DevNet resources\n\n- [Cisco Intersight DevNet Learning Labs ](https://developer.cisco.com/learning/modules/intersight-rest-api)\n\n- [Cisco Intersight DevNet Sandbox](https://devnetsandbox.cisco.com/RM/Diagram/Index/a63216d2-e891-4856-9f27-309ca61ec862?diagramType=Topology)",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -15,12 +15,12 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "814243f6-bc0f-45da-bf36-30a27d57b27a",
+								"id": "b3fab7d1-95fb-49f2-87df-35879b2b10e2",
 								"exec": [
 									"var respJsonData = JSON.parse(responseBody)",
 									"",
 									"if (respJsonData.Moid) {",
-									"  pm.globals.set(\"server-vmedia-policy\", respJsonData.Moid)",
+									"  pm.collectionVariables.set(\"server-vmedia-policy\", respJsonData.Moid)",
 									"}"
 								],
 								"type": "text/javascript"
@@ -29,28 +29,7 @@
 					],
 					"request": {
 						"method": "POST",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"value": "Signature {{httpsig}}"
-							},
-							{
-								"key": "Digest",
-								"value": "{{computed-digest}}"
-							},
-							{
-								"key": "Date",
-								"value": "{{current-date}}"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n\t\"Name\":\"server-vmedia-policy\",\n\t\"Mappings\":[\n\t\t{\n\t\t\t\"AuthenticationProtocol\":\"none\",\n\t\t\t\"DeviceType\":\"cdd\",\n\t\t\t\"HostName\":\"172.22.250.163\",\n\t\t\t\"MountOptions\":\"\",\n\t\t\t\"MountProtocol\":\"http\",\n\t\t\t\"RemoteFile\":\"Vmware-ESXi-6.5a.0-4887370-Custom-Cisco-6.5.0.2-LD.iso\",\n\t\t\t\"RemotePath\":\"/\",\n\t\t\t\"Username\":\"\",\n\t\t\t\"VolumeName\":\"ESXi-6.5a-LD\"\n\t\t}\n\t]\n}"
@@ -77,24 +56,7 @@
 					"name": "Retrieve Server VMedia Policy by Moid",
 					"request": {
 						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"value": "Signature {{httpsig}}"
-							},
-							{
-								"key": "Digest",
-								"value": "{{computed-digest}}"
-							},
-							{
-								"key": "Date",
-								"value": "{{current-date}}"
-							}
-						],
+						"header": [],
 						"url": {
 							"raw": "https://intersight.com/api/v1/vmedia/Policies/{{server-vmedia-policy}}",
 							"protocol": "https",
@@ -119,12 +81,12 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "a2a7cd4e-98fc-41df-8206-dcfc8c41b6f5",
+								"id": "ea48f546-a102-4a37-9975-39a670b657b0",
 								"exec": [
 									"var respJsonData = JSON.parse(responseBody)",
 									"",
 									"if (respJsonData.Moid) {",
-									"  pm.globals.set(\"server-boot-from-local-disk-policy\", respJsonData.Moid)",
+									"  pm.collectionVariables.set(\"server-boot-from-local-disk-policy\", respJsonData.Moid)",
 									"}"
 								],
 								"type": "text/javascript"
@@ -133,28 +95,7 @@
 					],
 					"request": {
 						"method": "POST",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"value": "Signature {{httpsig}}"
-							},
-							{
-								"key": "Digest",
-								"value": "{{computed-digest}}"
-							},
-							{
-								"key": "Date",
-								"value": "{{current-date}}"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n\t\"Name\":\"server-boot-from-local-disk-policy\",\n\t\"Description\":\"Boot Server from Local Disk\",\n\t\"BootDevices\":[\n\t\t{\n\t\t\t\"ObjectType\":\"boot.LocalDisk\",\n\t\t\t\"Enabled\":true,\"Name\":\"boot\",\n\t\t\t\"Slot\":\"SAS\"\n\t\t},\n\t\t{\n\t\t\t\"ObjectType\":\"boot.LocalCdd\",\n\t\t\t\"Enabled\":true,\"Name\":\"vmedia\"\n\t\t}\n\t]\n}"
@@ -180,24 +121,7 @@
 					"name": "Retrieve Server Boot Policy by Moid",
 					"request": {
 						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"value": "Signature {{httpsig}}"
-							},
-							{
-								"key": "Digest",
-								"value": "{{computed-digest}}"
-							},
-							{
-								"key": "Date",
-								"value": "{{current-date}}"
-							}
-						],
+						"header": [],
 						"url": {
 							"raw": "https://intersight.com/api/v1/boot/PrecisionPolicies/{{server-boot-from-local-disk-policy}}",
 							"protocol": "https",
@@ -222,12 +146,12 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "aafba98d-8f40-4a79-a566-a968fb13507e",
+								"id": "bff0b396-b24e-4889-be10-1439a80dda28",
 								"exec": [
 									"var respJsonData = JSON.parse(responseBody)",
 									"",
 									"if (respJsonData.Moid) {",
-									"  pm.globals.set(\"server-ntp-policy\", respJsonData.Moid)",
+									"  pm.collectionVariables.set(\"server-ntp-policy\", respJsonData.Moid)",
 									"}"
 								],
 								"type": "text/javascript"
@@ -236,28 +160,7 @@
 					],
 					"request": {
 						"method": "POST",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"value": "Signature {{httpsig}}"
-							},
-							{
-								"key": "Digest",
-								"value": "{{computed-digest}}"
-							},
-							{
-								"key": "Date",
-								"value": "{{current-date}}"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n  \"Name\":\"server-ntp-policy\",\n  \"Description\":\"NTP Policy for ntp.org\",\n  \"Enabled\":true,\n  \"NtpServers\":[\n  \t\"pool.ntp.org\"\n  \t],\n  \"Tags\":[]\n}"
@@ -283,24 +186,7 @@
 					"name": "Retrieve NTP Policy by Moid",
 					"request": {
 						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"value": "Signature {{httpsig}}"
-							},
-							{
-								"key": "Digest",
-								"value": "{{computed-digest}}"
-							},
-							{
-								"key": "Date",
-								"value": "{{current-date}}"
-							}
-						],
+						"header": [],
 						"url": {
 							"raw": "https://intersight.com/api/v1/ntp/Policies/{{server-ntp-policy}}",
 							"protocol": "https",
@@ -325,12 +211,12 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "4d585908-3e95-4608-bbed-d76d2edfdccd",
+								"id": "f42e2acc-eecc-47d3-be5b-9cc656c3ed2f",
 								"exec": [
 									"var respJsonData = JSON.parse(responseBody)",
 									"",
 									"if (respJsonData.Moid) {",
-									"  pm.globals.set(\"server-server-profile-01\", respJsonData.Moid)",
+									"  pm.collectionVariables.set(\"server-server-profile-01\", respJsonData.Moid)",
 									"}"
 								],
 								"type": "text/javascript"
@@ -339,28 +225,7 @@
 					],
 					"request": {
 						"method": "POST",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"value": "Signature {{httpsig}}"
-							},
-							{
-								"key": "Digest",
-								"value": "{{computed-digest}}"
-							},
-							{
-								"key": "Date",
-								"value": "{{current-date}}"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n\t\"Name\":\"server-01\",\n\t\"Description\":\"Server Profile for a Server\",\n\t\"Tags\":[]\n}"
@@ -429,12 +294,12 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "4d585908-3e95-4608-bbed-d76d2edfdccd",
+								"id": "de6b22cb-13ad-4e78-84bf-676ac80513c3",
 								"exec": [
 									"var respJsonData = JSON.parse(responseBody)",
 									"",
 									"if (respJsonData.Moid) {",
-									"  pm.globals.set(\"server-server-profile-02\", respJsonData.Moid)",
+									"  pm.collectionVariables.set(\"server-server-profile-02\", respJsonData.Moid)",
 									"}"
 								],
 								"type": "text/javascript"
@@ -443,28 +308,7 @@
 					],
 					"request": {
 						"method": "POST",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"value": "Signature {{httpsig}}"
-							},
-							{
-								"key": "Digest",
-								"value": "{{computed-digest}}"
-							},
-							{
-								"key": "Date",
-								"value": "{{current-date}}"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n\t\"Name\":\"server-02\",\n\t\"Description\":\"Server Profile for a Server\",\n\t\"Tags\":[]\n}"
@@ -533,7 +377,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "814243f6-bc0f-45da-bf36-30a27d57b27a",
+								"id": "5e27b590-4a11-433b-81f0-5088d3cd2dc3",
 								"exec": [
 									""
 								],
@@ -543,7 +387,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "f18fde3b-23f6-4b6d-a3ec-3ec0cb7be1c0",
+								"id": "7260fbe6-43d1-46f8-99f0-d493e2e83482",
 								"exec": [
 									""
 								],
@@ -553,28 +397,7 @@
 					],
 					"request": {
 						"method": "POST",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"value": "Signature {{httpsig}}"
-							},
-							{
-								"key": "Digest",
-								"value": "{{computed-digest}}"
-							},
-							{
-								"key": "Date",
-								"value": "{{current-date}}"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "[\n\t{\n\t\t\"ObjectType\":\"server.Profile\",\n\t\t\"Moid\": \"{{server-server-profile-01}}\"\n\t\t\n\t},\n\t{\n\t\t\"ObjectType\":\"server.Profile\",\n\t\t\"Moid\": \"{{server-server-profile-02}}\"\n\t\t\n\t}\n]"
@@ -604,7 +427,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "814243f6-bc0f-45da-bf36-30a27d57b27a",
+								"id": "13c1fed1-9de5-4f0f-a5fc-06fa28311539",
 								"exec": [
 									""
 								],
@@ -614,7 +437,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "f18fde3b-23f6-4b6d-a3ec-3ec0cb7be1c0",
+								"id": "0fff3dd0-eb33-4c52-8ef9-b0df67191deb",
 								"exec": [
 									""
 								],
@@ -624,28 +447,7 @@
 					],
 					"request": {
 						"method": "POST",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"value": "Signature {{httpsig}}"
-							},
-							{
-								"key": "Digest",
-								"value": "{{computed-digest}}"
-							},
-							{
-								"key": "Date",
-								"value": "{{current-date}}"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "[\n\t{\n\t\t\"ObjectType\":\"server.Profile\",\n\t\t\"Moid\": \"{{server-server-profile-01}}\"\n\t\t\n\t},\n\t{\n\t\t\"ObjectType\":\"server.Profile\",\n\t\t\"Moid\": \"{{server-server-profile-02}}\"\n\t\t\n\t}\n]"
@@ -675,7 +477,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "814243f6-bc0f-45da-bf36-30a27d57b27a",
+								"id": "67ddd696-094c-417d-99c4-e8b0aa471419",
 								"exec": [
 									""
 								],
@@ -685,7 +487,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "f18fde3b-23f6-4b6d-a3ec-3ec0cb7be1c0",
+								"id": "f14a6b26-e4cd-4ef6-ad7f-375104de7944",
 								"exec": [
 									""
 								],
@@ -695,28 +497,7 @@
 					],
 					"request": {
 						"method": "POST",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"value": "Signature {{httpsig}}"
-							},
-							{
-								"key": "Digest",
-								"value": "{{computed-digest}}"
-							},
-							{
-								"key": "Date",
-								"value": "{{current-date}}"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "[\n\t{\n\t\t\"ObjectType\":\"server.Profile\",\n\t\t\"Moid\": \"{{server-server-profile-01}}\"\n\t\t\n\t},\n\t{\n\t\t\"ObjectType\":\"server.Profile\",\n\t\t\"Moid\": \"{{server-server-profile-02}}\"\n\t\t\n\t}\n]"
@@ -746,12 +527,12 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "dc287cff-79ed-41cb-bfd7-3cf7c029d444",
+								"id": "94cca325-9f45-40e6-a8aa-5cc7c362d73c",
 								"exec": [
 									"var respJsonData = JSON.parse(responseBody)",
 									"",
 									"if (respJsonData.Results[0].Moid) {",
-									"  pm.globals.set(\"server-compute-resource\", respJsonData.Results[0].Moid)",
+									"  pm.collectionVariables.set(\"server-compute-resource\", respJsonData.Results[0].Moid)",
 									"}"
 								],
 								"type": "text/javascript"
@@ -807,7 +588,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "814243f6-bc0f-45da-bf36-30a27d57b27a",
+								"id": "50f43455-0482-4ac6-bb05-ef1aaa590b45",
 								"exec": [
 									""
 								],
@@ -817,28 +598,7 @@
 					],
 					"request": {
 						"method": "POST",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"value": "Signature {{httpsig}}"
-							},
-							{
-								"key": "Digest",
-								"value": "{{computed-digest}}"
-							},
-							{
-								"key": "Date",
-								"value": "{{current-date}}"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n\t\"AssignedServer\": \"{{server-compute-resource}}\"\n}\n"
@@ -867,7 +627,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "814243f6-bc0f-45da-bf36-30a27d57b27a",
+								"id": "d3478c98-096b-4a22-9e34-f46ee094b5fd",
 								"exec": [
 									""
 								],
@@ -877,28 +637,7 @@
 					],
 					"request": {
 						"method": "POST",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"value": "Signature {{httpsig}}"
-							},
-							{
-								"key": "Digest",
-								"value": "{{computed-digest}}"
-							},
-							{
-								"key": "Date",
-								"value": "{{current-date}}"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n\t\"Action\": \"Deploy\"\n}\n"
@@ -927,7 +666,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "814243f6-bc0f-45da-bf36-30a27d57b27a",
+								"id": "edc53b28-cfc4-413f-88d2-abe9c599addf",
 								"exec": [
 									""
 								],
@@ -937,28 +676,7 @@
 					],
 					"request": {
 						"method": "POST",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"value": "Signature {{httpsig}}"
-							},
-							{
-								"key": "Digest",
-								"value": "{{computed-digest}}"
-							},
-							{
-								"key": "Date",
-								"value": "{{current-date}}"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n\t\"Action\": \"Unassign\"\n}\n"
@@ -987,7 +705,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "814243f6-bc0f-45da-bf36-30a27d57b27a",
+								"id": "0411f216-e491-4c6b-9aec-5c1917a3bfdc",
 								"exec": [
 									""
 								],
@@ -997,28 +715,7 @@
 					],
 					"request": {
 						"method": "POST",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"value": "Signature {{httpsig}}"
-							},
-							{
-								"key": "Digest",
-								"value": "{{computed-digest}}"
-							},
-							{
-								"key": "Date",
-								"value": "{{current-date}}"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n\t\"Profiles\": [\n\t\t{\n\t\t\t\"ObjectType\":\"server.Profile\",\n\t\t\t\"Moid\":\"{{server-server-profile-01}}\",\n\t\t\t\"link\": \"https://www.intersight.com/api/v1/server/Profiles/{{server-server-profile-01}}\"\n\t\t}\n\t]\n}\n"
@@ -1041,7 +738,8 @@
 					},
 					"response": []
 				}
-			]
+			],
+			"protocolProfileBehavior": {}
 		},
 		{
 			"name": "Device Claiming",
@@ -1052,7 +750,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "aafba98d-8f40-4a79-a566-a968fb13507e",
+								"id": "f484a96c-da5e-4251-bd09-572ef59aa0e2",
 								"exec": [
 									""
 								],
@@ -1062,28 +760,7 @@
 					],
 					"request": {
 						"method": "POST",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"value": "Signature {{httpsig}}"
-							},
-							{
-								"key": "Digest",
-								"value": "{{computed-digest}}"
-							},
-							{
-								"key": "Date",
-								"value": "{{current-date}}"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n  \"SecurityToken\": \"{{security-token}}\",\n  \"SerialNumber\": \"{{serial-number}}\"\n}"
@@ -1106,7 +783,8 @@
 					"response": []
 				}
 			],
-			"description": "Use this call to claim a device"
+			"description": "Use this call to claim a device",
+			"protocolProfileBehavior": {}
 		},
 		{
 			"name": "Api Key Managment",
@@ -1117,12 +795,12 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "aafba98d-8f40-4a79-a566-a968fb13507e",
+								"id": "a6fdb591-9f8a-4d44-8c46-a2dd47d23269",
 								"exec": [
 									"var respJsonData = JSON.parse(responseBody)",
 									"",
 									"if (respJsonData.Moid) {",
-									"  pm.globals.set(\"api-key\", respJsonData.Moid)",
+									"  pm.collectionVariables.set(\"api-key\", respJsonData.Moid)",
 									"}"
 								],
 								"type": "text/javascript"
@@ -1131,28 +809,7 @@
 					],
 					"request": {
 						"method": "POST",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"value": "Signature {{httpsig}}"
-							},
-							{
-								"key": "Digest",
-								"value": "{{computed-digest}}"
-							},
-							{
-								"key": "Date",
-								"value": "{{current-date}}"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n\t\"Purpose\": \"API Key Create\"\n}"
@@ -1180,7 +837,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "aafba98d-8f40-4a79-a566-a968fb13507e",
+								"id": "5a595d29-74cb-43f8-8ea5-87c273a32202",
 								"exec": [
 									""
 								],
@@ -1190,28 +847,7 @@
 					],
 					"request": {
 						"method": "PATCH",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"value": "Signature {{httpsig}}"
-							},
-							{
-								"key": "Digest",
-								"value": "{{computed-digest}}"
-							},
-							{
-								"key": "Date",
-								"value": "{{current-date}}"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n  \"Purpose\": \"API Key Update\"\n}"
@@ -1240,7 +876,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "aafba98d-8f40-4a79-a566-a968fb13507e",
+								"id": "31814204-4beb-4eba-9063-b2edc56d43fd",
 								"exec": [
 									"pm.globals.unset(\"api-key\");"
 								],
@@ -1250,28 +886,7 @@
 					],
 					"request": {
 						"method": "DELETE",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"value": "Signature {{httpsig}}"
-							},
-							{
-								"key": "Digest",
-								"value": "{{computed-digest}}"
-							},
-							{
-								"key": "Date",
-								"value": "{{current-date}}"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": ""
@@ -1295,7 +910,8 @@
 					"response": []
 				}
 			],
-			"description": "Use these calls to manage Intersight API Keys"
+			"description": "Use these calls to manage Intersight API Keys",
+			"protocolProfileBehavior": {}
 		},
 		{
 			"name": "Any Query",
@@ -1303,7 +919,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "ace0e7ae-0f92-4789-b6dd-24d17e67ca56",
+						"id": "c45a3b3f-04bd-4d8f-9a3a-2ca0136f7a83",
 						"exec": [
 							""
 						],
@@ -1313,24 +929,7 @@
 			],
 			"request": {
 				"method": "GET",
-				"header": [
-					{
-						"key": "Accept",
-						"value": "application/json"
-					},
-					{
-						"key": "Authorization",
-						"value": "Signature {{httpsig}}"
-					},
-					{
-						"key": "Digest",
-						"value": "{{computed-digest}}"
-					},
-					{
-						"key": "Date",
-						"value": "{{current-date}}"
-					}
-				],
+				"header": [],
 				"url": {
 					"raw": ""
 				}
@@ -1343,7 +942,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "dc287cff-79ed-41cb-bfd7-3cf7c029d444",
+						"id": "d2c27b49-0701-4e06-9a0e-a0ec324b6867",
 						"exec": [
 							"if (responseBody.length > 0) {",
 							"  var jsonData = JSON.parse(responseBody);",
@@ -1362,24 +961,7 @@
 			],
 			"request": {
 				"method": "GET",
-				"header": [
-					{
-						"key": "Accept",
-						"value": "application/json"
-					},
-					{
-						"key": "Authorization",
-						"value": "Signature {{httpsig}}"
-					},
-					{
-						"key": "Digest",
-						"value": "{{computed-digest}}"
-					},
-					{
-						"key": "Date",
-						"value": "{{current-date}}"
-					}
-				],
+				"header": [],
 				"url": {
 					"raw": "https://intersight.com/api/v1/compute/PhysicalSummaries",
 					"protocol": "https",
@@ -1403,7 +985,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "b79e7a35-b399-48f2-bbc1-95d0088c4721",
+						"id": "4d0e8647-e476-4e16-ae95-ebb51ba64bfa",
 						"exec": [
 							"var rackunits = [];",
 							"",
@@ -1418,8 +1000,8 @@
 							"        \"NumCpus: \" + object.NumCpus);",
 							"  }",
 							"}",
-							"pm.globals.set(\"rackunits\", JSON.stringify(rackunits));",
-							"pm.globals.set(\"rackunit_index\", 0)"
+							"pm.collectionVariables.set(\"rackunits\", JSON.stringify(rackunits));",
+							"pm.collectionVariables.set(\"rackunit_index\", 0)"
 						],
 						"type": "text/javascript"
 					}
@@ -1427,24 +1009,7 @@
 			],
 			"request": {
 				"method": "GET",
-				"header": [
-					{
-						"key": "Accept",
-						"value": "application/json"
-					},
-					{
-						"key": "Authorization",
-						"value": "Signature {{httpsig}}"
-					},
-					{
-						"key": "Digest",
-						"value": "{{computed-digest}}"
-					},
-					{
-						"key": "Date",
-						"value": "{{current-date}}"
-					}
-				],
+				"header": [],
 				"url": {
 					"raw": "https://intersight.com/api/v1/compute/RackUnits",
 					"protocol": "https",
@@ -1468,7 +1033,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "a0bb7258-dc37-4906-90ac-12ab000427c0",
+						"id": "3dfc6350-6291-4884-97a9-383dd68250a3",
 						"exec": [
 							""
 						],
@@ -1478,20 +1043,20 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "2f7ee53d-c40d-4e7f-8de6-d6dfad9e091c",
+						"id": "f207f71c-a4d6-4984-a19e-0cc05f474ded",
 						"exec": [
 							"// Fetch the variables set in \"Get Compute RackUnitsTenants\"",
 							"",
-							"rackunits = JSON.parse(pm.variables.get('rackunits'))",
-							"index = parseInt(pm.variables.get('rackunit_index'))",
-							"pm.globals.set('rackunit_moid', rackunits[index])",
+							"rackunits = JSON.parse(pm.collectionVariables.get('rackunits'))",
+							"index = parseInt(pm.collectionVariables.get('rackunit_index'))",
+							"pm.collectionVariables.set('rackunit_moid', rackunits[index])",
 							"",
 							"// If we are *not* on the last item in the list,",
 							"// increment the index and set the next request ",
 							"// back to this one. Otherwise end the loop.",
 							"",
 							"if (index + 1 < rackunits.length){",
-							"    pm.globals.set('rackunit_index', index + 1)",
+							"    pm.collectionVariables.set('rackunit_index', index + 1)",
 							"    postman.setNextRequest('GET Single Compute / RackUnit')",
 							"}else{",
 							"    postman.setNextRequest(null)",
@@ -1503,24 +1068,7 @@
 			],
 			"request": {
 				"method": "GET",
-				"header": [
-					{
-						"key": "Accept",
-						"value": "application/json"
-					},
-					{
-						"key": "Authorization",
-						"value": "Signature {{httpsig}}"
-					},
-					{
-						"key": "Digest",
-						"value": "{{computed-digest}}"
-					},
-					{
-						"key": "Date",
-						"value": "{{current-date}}"
-					}
-				],
+				"header": [],
 				"url": {
 					"raw": "https://intersight.com/api/v1/compute/RackUnits/{{rackunit_moid}}",
 					"protocol": "https",
@@ -1543,24 +1091,7 @@
 			"name": "GET NTP Policy",
 			"request": {
 				"method": "GET",
-				"header": [
-					{
-						"key": "Accept",
-						"value": "application/json"
-					},
-					{
-						"key": "Authorization",
-						"value": "Signature {{httpsig}}"
-					},
-					{
-						"key": "Digest",
-						"value": "{{computed-digest}}"
-					},
-					{
-						"key": "Date",
-						"value": "{{current-date}}"
-					}
-				],
+				"header": [],
 				"url": {
 					"raw": "https://intersight.com/api/v1/ntp/Policies",
 					"protocol": "https",
@@ -1584,12 +1115,12 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "662374a2-8323-45fc-bd0e-241c4fcd53bc",
+						"id": "0f8b334e-3358-4636-bbff-8a7a5054de71",
 						"exec": [
 							"var respJsonData = JSON.parse(responseBody)",
 							"",
 							"if (respJsonData.Moid) {",
-							"  pm.globals.set(\"ntp-policy\", respJsonData.Moid)",
+							"  pm.collectionVariables.set(\"ntp-policy\", respJsonData.Moid)",
 							"}"
 						],
 						"type": "text/javascript"
@@ -1598,28 +1129,7 @@
 			],
 			"request": {
 				"method": "POST",
-				"header": [
-					{
-						"key": "Accept",
-						"value": "application/json"
-					},
-					{
-						"key": "Authorization",
-						"value": "Signature {{httpsig}}"
-					},
-					{
-						"key": "Digest",
-						"value": "{{computed-digest}}"
-					},
-					{
-						"key": "Date",
-						"value": "{{current-date}}"
-					},
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					}
-				],
+				"header": [],
 				"body": {
 					"mode": "raw",
 					"raw": "{\n\t\"Enabled\":true,\n\t\"Name\": \"ntp-policy\",\n\t\"Description\": \"NTP Policy for ntp.org\",\n\t\"NtpServers\": [ \"pool.ntp.org\" ],\n\t\"Tags\":[]\n}"
@@ -1647,12 +1157,12 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "662374a2-8323-45fc-bd0e-241c4fcd53bc",
+						"id": "08146c8a-b14c-4d7e-b8c1-ddcfab63ddad",
 						"exec": [
 							"var respJsonData = JSON.parse(responseBody)",
 							"",
 							"if (respJsonData.Moid) {",
-							"  pm.globals.set(\"ntp-policy\", respJsonData.Moid)",
+							"  pm.collectionVariables.set(\"ntp-policy\", respJsonData.Moid)",
 							"}"
 						],
 						"type": "text/javascript"
@@ -1661,28 +1171,7 @@
 			],
 			"request": {
 				"method": "POST",
-				"header": [
-					{
-						"key": "Accept",
-						"value": "application/json"
-					},
-					{
-						"key": "Authorization",
-						"value": "Signature {{httpsig}}"
-					},
-					{
-						"key": "Digest",
-						"value": "{{computed-digest}}"
-					},
-					{
-						"key": "Date",
-						"value": "{{current-date}}"
-					},
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					}
-				],
+				"header": [],
 				"body": {
 					"mode": "raw",
 					"raw": "{\n\t\"DirectDownload\":{},\n\t\"NetworkShare\":{\n\t\t\"MapType\":\"www\",\n\t\t\"Upgradeoption\":\"nw_upgrade_full\",\n\t\t\"HttpServer\":{\n\t\t\t\"LocationLink\":\"10.10.10.10/ucs-c240m4-huu-4.1.1f.iso\"\n\t\t}\n\t},\n\t\"UpgradeType\":\"network_upgrade\",\n\t\"Server\":\"5e21ec636176752d31b17ff8\"\n}"
@@ -1709,24 +1198,7 @@
 			"name": "GET NTP Policy by Moid",
 			"request": {
 				"method": "GET",
-				"header": [
-					{
-						"key": "Accept",
-						"value": "application/json"
-					},
-					{
-						"key": "Authorization",
-						"value": "Signature {{httpsig}}"
-					},
-					{
-						"key": "Digest",
-						"value": "{{computed-digest}}"
-					},
-					{
-						"key": "Date",
-						"value": "{{current-date}}"
-					}
-				],
+				"header": [],
 				"url": {
 					"raw": "https://intersight.com/api/v1/ntp/Policies/{{ntp-policy}}",
 					"protocol": "https",
@@ -1751,7 +1223,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "662374a2-8323-45fc-bd0e-241c4fcd53bc",
+						"id": "f22b4d66-c626-4296-b104-03389635d389",
 						"exec": [
 							""
 						],
@@ -1761,28 +1233,7 @@
 			],
 			"request": {
 				"method": "PATCH",
-				"header": [
-					{
-						"key": "Accept",
-						"value": "application/json"
-					},
-					{
-						"key": "Authorization",
-						"value": "Signature {{httpsig}}"
-					},
-					{
-						"key": "Digest",
-						"value": "{{computed-digest}}"
-					},
-					{
-						"key": "Date",
-						"value": "{{current-date}}"
-					},
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					}
-				],
+				"header": [],
 				"body": {
 					"mode": "raw",
 					"raw": "{\n  \"NtpServers\":[\n  \t\"pool.ntp.org\",\n  \t\"10.10.10.30\"\n  ]\n}"
@@ -1811,9 +1262,9 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "1e022489-7373-4dec-b238-7b043ac3e008",
+						"id": "0cd750e9-10e4-4e4a-b8f0-5dc03b6e7c68",
 						"exec": [
-							"pm.globals.unset(\"ntp-policy\");"
+							"pm.collectionVariables.unset(\"ntp-policy\");"
 						],
 						"type": "text/javascript"
 					}
@@ -1821,24 +1272,7 @@
 			],
 			"request": {
 				"method": "DELETE",
-				"header": [
-					{
-						"key": "Accept",
-						"value": "application/json"
-					},
-					{
-						"key": "Authorization",
-						"value": "Signature {{httpsig}}"
-					},
-					{
-						"key": "Digest",
-						"value": "{{computed-digest}}"
-					},
-					{
-						"key": "Date",
-						"value": "{{current-date}}"
-					}
-				],
+				"header": [],
 				"url": {
 					"raw": "https://intersight.com/api/v1/ntp/Policies/{{ntp-policy}}",
 					"protocol": "https",
@@ -1861,29 +1295,7 @@
 			"name": "User Creation",
 			"request": {
 				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					},
-					{
-						"key": "Authorization",
-						"value": "Signature {{httpsig}}",
-						"type": "text"
-					},
-					{
-						"key": "Digest",
-						"value": "{{computed-digest}}",
-						"type": "text"
-					},
-					{
-						"key": "Date",
-						"value": "{{current-date}}",
-						"type": "text"
-					}
-				],
+				"header": [],
 				"body": {
 					"mode": "raw",
 					"raw": "{\n\t\"Email\":\"person@email.com\",\n\t\"Idpreference\": {\n\t\t\"Selector\": \"$filter=Name eq 'Cisco'\"\n\t},\n\t\"Permissions\": [\n\t\t{\n\t\t\t\"Selector\": \"$filter=Name eq 'Device Administrator'\"\n\t\t},\n\t\t{\n\t\t\t\"Selector\": \"$filter=Name eq 'HyperFlex Cluster Administrator'\"\n\t\t}\n\t]\n}",
@@ -1918,29 +1330,7 @@
 			},
 			"request": {
 				"method": "GET",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					},
-					{
-						"key": "Authorization",
-						"value": "Signature {{httpsig}}",
-						"type": "text"
-					},
-					{
-						"key": "Digest",
-						"value": "{{computed-digest}}",
-						"type": "text"
-					},
-					{
-						"key": "Date",
-						"value": "{{current-date}}",
-						"type": "text"
-					}
-				],
+				"header": [],
 				"body": {
 					"mode": "raw",
 					"raw": "",
@@ -1973,7 +1363,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "1f10ec49-ace0-4628-879a-3f93dee1db1b",
+				"id": "6df1610f-6435-4bff-a192-41d45e653cc1",
 				"type": "text/javascript",
 				"exec": [
 					"function doHttpSig() {",
@@ -1981,7 +1371,7 @@
 					"    var navigator = {}; //fake a navigator object for the lib",
 					"    var window    = {}; //fake a window object for the lib",
 					"    ",
-					"    eval(postman.getGlobalVariable(\"jsrsasign-js\")); //import javascript jsrsasign",
+					"    eval(pm.collectionVariables.get(\"jsrsasign-js\")); //import javascript jsrsasign",
 					"    ",
 					"    ",
 					"    function computeHttpSignature(config, headerHash) {",
@@ -2048,13 +1438,16 @@
 					"    // Process Query String",
 					"    console.log(\"Query String:\");",
 					"    var queryString  = \"\";",
-					"    for (var i = 0; i < resolvedRequest.url.query.length; ++i) {",
-					"            console.log(\"Key:\" + resolvedRequest.url.query[i].key);",
-					"            console.log(\"Value: \" + resolvedRequest.url.query[i].value);",
-					"            ",
-					"            if (i>0) {",
+					"    var paramCount = 0;",
+					"    pm.request.url.query.all().forEach( (param) => { ",
+					"        // Append each URL encoded parameter to the targetUrl",
+					"        // However unencode Commas (,), Colons (:), Dollar Signs (:)",
+					"        // and Forward Slashes (/)",
+					"        if (!param.disabled) {",
+					"            if (paramCount > 0) {",
 					"                queryString += '&';",
 					"            }",
+					"            paramCount++;",
 					"            // Append each URL encoded parameter to the targetUrl unencode ",
 					"            // 24 $ Dollar Sign",
 					"            // 28 ( Left Parenthesis ",
@@ -2067,12 +1460,14 @@
 					"            // 40 @ At Sign",
 					"            //",
 					"            queryString += (",
-					"                resolvedRequest.url.query[i].key + \"=\" +",
-					"                encodeURIComponent(resolvedRequest.url.query[i].value).",
+					"                param.key + \"=\" +",
+					"                encodeURIComponent(param.value).",
 					"                replace(/['()=]/g, escape).",
 					"                replace(/%(?:24|28|29|2B|2C|2F|3A|3D|40)/g, unescape)",
 					"            );",
-					"    }",
+					"        }",
+					"    });",
+					"    console.log(queryString);",
 					"    ",
 					"    if (queryString.length > 0) {",
 					"        queryStringTmp = queryString.replace(\"%25\",\"%\")",
@@ -2097,13 +1492,37 @@
 					"        };",
 					"    var sig = computeHttpSignature(configHash, headerHash);",
 					"    ",
-					"    postman.setEnvironmentVariable('httpsig', sig);",
-					"    postman.setEnvironmentVariable('computed-digest', computedDigest);",
-					"    postman.setEnvironmentVariable(\"current-date\", curDate);",
-					"    postman.setEnvironmentVariable(\"target-url\", targetUrl);",
+					"    pm.collectionVariables.set('httpsig', sig);",
+					"    pm.collectionVariables.set('computed-digest', computedDigest);",
+					"    pm.collectionVariables.set(\"current-date\", curDate);",
+					"    pm.collectionVariables.set(\"target-url\", targetUrl);",
+					"    pm.request.headers.add({",
+					"        key: 'Accept',",
+					"        value: 'application/json'",
+					"    });",
+					"    pm.request.headers.add({",
+					"        key: 'Accept',",
+					"        value: 'application/json'",
+					"    });",
+					"    pm.request.headers.add({",
+					"        key: 'Authorization',",
+					"        value: `Signature ${sig}`",
+					"    });",
+					"    pm.request.headers.add({",
+					"        key: 'Digest',",
+					"        value: computedDigest",
+					"    });",
+					"    pm.request.headers.add({",
+					"        key: 'Date',",
+					"        value: curDate",
+					"    });",
+					"    pm.request.headers.add({",
+					"        key: 'Content-Type',",
+					"        value: 'application/json'",
+					"    });",
 					"}",
 					"",
-					"if (globals['jsrsasign-js'] === undefined || globals['jsrsasign-js'] == \"\") {",
+					"if (pm.collectionVariables.get('jsrsasign-js') === undefined || pm.collectionVariables.get('jsrsasign-js') == \"\") {",
 					"    console.log(\"jsrasign library not already downloaded. Downloading now. \");",
 					"    ",
 					"    pm.sendRequest({",
@@ -2111,7 +1530,8 @@
 					"        method: \"GET\",",
 					"        body: {}",
 					"    }, function (err, res) {",
-					"        postman.setGlobalVariable(\"jsrsasign-js\", res.text());",
+					"        console.log(res.text());",
+					"        pm.collectionVariables.set(\"jsrsasign-js\", res.text());",
 					"        doHttpSig();",
 					"    });",
 					"    ",
@@ -2125,7 +1545,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "1247d526-0aaa-4519-bd82-b349c2866a5e",
+				"id": "0a778089-d500-4bcd-8847-63eae717a14d",
 				"type": "text/javascript",
 				"exec": [
 					"tests[\"Status code is 200\"] = responseCode.code === 200;",
